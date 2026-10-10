@@ -178,7 +178,7 @@ services:
     runtime: python
     region: singapore # Close to India
     plan: free
-    buildCommand: "pip install -r backend/requirements.txt && playwright install chromium --with-deps 2>/dev/null || true"
+    buildCommand: "pip install -r backend/requirements.txt && playwright install chromium 2>/dev/null || true"
     startCommand: "uvicorn backend.main:app --host 0.0.0.0 --port $PORT"
     envVars:
       - key: DATABASE_URL
@@ -500,6 +500,105 @@ class SeleniumFlightScraper:
             )}
           </div>
         )}
+      </div>
+
+      {/* Database Expired Recovery Card */}
+      <div className="bg-slate-900 text-white p-5 rounded-xl border border-slate-800 shadow-md">
+        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <Database className="w-4 h-4 text-emerald-400" />
+              <span className="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">
+                Database Lifecycle &amp; Disaster Recovery
+              </span>
+              <span className="text-xs text-amber-400 font-semibold">
+                Render 30-Day Free Limit
+              </span>
+            </div>
+            <h3 className="text-base font-bold text-white">
+              Render Database Expired? 3 Immediate Solutions
+            </h3>
+            <p className="text-xs text-slate-400 mt-1 max-w-3xl">
+              Render&apos;s free PostgreSQL tier automatically expires 30 days after creation. Follow any of the solutions below to restore data persistence or avoid future expirations.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+          {/* Solution 1 */}
+          <div className="bg-slate-800/80 border border-slate-700 p-4 rounded-lg flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-2 font-bold text-emerald-400 mb-2">
+                <span className="w-5 h-5 rounded-full bg-emerald-900/80 border border-emerald-600 flex items-center justify-center text-[11px] text-emerald-300">1</span>
+                Re-Provision on Render (Free)
+              </div>
+              <p className="text-slate-300 text-[11px] leading-relaxed mb-3">
+                Create a new 30-day free database on Render in 60 seconds:
+              </p>
+              <ol className="text-[11px] text-slate-400 space-y-1.5 list-decimal list-inside mb-3">
+                <li>In Render Dashboard, delete the expired DB.</li>
+                <li>Click <strong className="text-slate-200">New + → PostgreSQL</strong>.</li>
+                <li>Name: <code className="text-emerald-300 bg-slate-900 px-1 rounded">apix-postgres</code>, Region: <strong className="text-slate-200">Singapore</strong>.</li>
+                <li>Copy the <strong className="text-slate-200">Internal Database URL</strong>.</li>
+                <li>In <code className="text-slate-200">apix-fastapi-backend</code> → <strong className="text-slate-200">Environment</strong>, update <code className="text-emerald-300">DATABASE_URL</code>.</li>
+              </ol>
+            </div>
+            <span className="text-[10px] text-slate-500 italic">
+              FastAPI auto-initializes schemas and seeds all 8 domestic trunk routes upon restart.
+            </span>
+          </div>
+
+          {/* Solution 2 */}
+          <div className="bg-slate-800/80 border border-slate-700 p-4 rounded-lg flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-2 font-bold text-blue-400 mb-2">
+                <span className="w-5 h-5 rounded-full bg-blue-900/80 border border-blue-600 flex items-center justify-center text-[11px] text-blue-300">2</span>
+                Neon or Supabase (Permanent Free)
+              </div>
+              <p className="text-slate-300 text-[11px] leading-relaxed mb-3">
+                Use a cloud PostgreSQL provider whose free tier never expires:
+              </p>
+              <ul className="text-[11px] text-slate-400 space-y-2 mb-3">
+                <li className="flex items-start gap-1.5">
+                  <span className="text-blue-400 font-bold">•</span>
+                  <span><strong className="text-slate-200">Neon.tech</strong>: 0.5GB serverless Postgres with instant setup, no 30-day timeout.</span>
+                </li>
+                <li className="flex items-start gap-1.5">
+                  <span className="text-blue-400 font-bold">•</span>
+                  <span><strong className="text-slate-200">Supabase.com</strong>: 500MB free PostgreSQL.</span>
+                </li>
+              </ul>
+              <p className="text-[11px] text-slate-300 mb-2">
+                Simply paste the connection string into Render <code className="text-blue-300">DATABASE_URL</code>!
+              </p>
+            </div>
+            <span className="text-[10px] text-slate-500 italic">
+              Best for long-running deployments and continuous hackathon evaluation.
+            </span>
+          </div>
+
+          {/* Solution 3 */}
+          <div className="bg-slate-800/80 border border-slate-700 p-4 rounded-lg flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-2 font-bold text-amber-400 mb-2">
+                <span className="w-5 h-5 rounded-full bg-amber-900/80 border border-amber-600 flex items-center justify-center text-[11px] text-amber-300">3</span>
+                Automated SQLite Failover (Active)
+              </div>
+              <p className="text-slate-300 text-[11px] leading-relaxed mb-3">
+                Your backend code in <code className="text-amber-300 bg-slate-900 px-1 rounded">backend/database.py</code> now contains built-in failover logic:
+              </p>
+              <div className="bg-slate-950 p-2.5 rounded font-mono text-[10px] text-emerald-400 mb-3 space-y-1">
+                <p className="text-slate-400"># Auto-fallback implemented:</p>
+                <p>PostgreSQL connect timeout: 5s</p>
+                <p>If expired → Fallback to SQLite</p>
+                <p>Status → Zero container crashes</p>
+              </div>
+            </div>
+            <span className="text-[10px] text-emerald-400 font-semibold">
+              ✓ Even if PostgreSQL is deleted, the backend stays 100% online.
+            </span>
+          </div>
+        </div>
       </div>
 
       {/* Two Columns: Section 1 = Interactive API Explorer; Section 2 = Render Blueprint & Codebase */}

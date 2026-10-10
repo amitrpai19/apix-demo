@@ -13,7 +13,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
-from .database import engine, Base, get_db
+from .database import engine, Base, get_db, active_db_type
 from .models import BasketRoute, RawFareQuote, PricingContextFeature, ApixDailyIndex
 from .index_engine import (
     filter_iqr_outliers,
@@ -269,7 +269,8 @@ def health_check():
     return {
         "status": "healthy",
         "service": "APIx-India FastAPI Backend",
-        "database": "PostgreSQL" if "postgres" in os.getenv("DATABASE_URL", "") else "SQLite (Local)",
+        "database": active_db_type,
+        "database_status": "connected" if active_db_type == "postgresql" else "fallback_active (SQLite active; PostgreSQL expired or unavailable)",
         "version": "1.0.0"
     }
 
